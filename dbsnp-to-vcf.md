@@ -1,5 +1,5 @@
 # dbsnp to vcf
-
+```
 export DBSNP_VERSION=155
 
 wget "https://ftp.ncbi.nih.gov/snp/archive/b$DBSNP_VERSION/VCF/GCF_000001405.39.gz"
@@ -17,3 +17,5 @@ bcftools annotate \
   GCF_000001405.39.gz
 
 tabix -p vcf GRCh38.dbSNP$DBSNP_VERSION.vcf.gz
+bcftools norm -c x -f genome/GRCh38.no_alt_analysis_set.fa.gz GRCh38.dbSNP155 chr.vcf.gz GRCh38.dbSNP155.chr.norm.vcf.gz -O z
+```

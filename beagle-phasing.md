@@ -11,7 +11,7 @@ export MY_VCF_NAME=$(basename "$MY_VCF" | cut -d. -f1)
 zcat $MY_VCF | sed 's/^chr//' | bgzip -c > $WORKING_DIR'/'$MY_VCF_NAME'.nochr.vcf.gz'
 
 ### run beagle
-for CHR in $(ls /opt/tools/beagle/map/plink* | cut -d. -f2 | grep chr | tail -3); do 
+for CHR in $(ls /opt/tools/beagle/map/plink* | cut -d. -f2 | grep chr); do 
   export SHORT_CHR=$(echo $CHR | cut -d_ -f1 | sed 's/chr//'); 
   beagle \
     gt=$WORKING_DIR'/'$MY_VCF_NAME'.nochr.vcf.gz' \

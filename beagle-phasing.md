@@ -16,7 +16,7 @@ beagle gt=$WORKING_DIR'/'$MY_VCF_NAME'.nochr.vcf.gz' ref=1.38.bref3 out=$WORKING
 for CHR in $(ls /opt/tools/beagle/map/plink* | cut -d. -f2 | grep chr | tail -3); do 
   export SHORT_CHR=$(echo $CHR | cut -d_ -f1 | sed 's/chr//'); 
   beagle \
-    gt=no_id_provided_genotyped-by-vcf.nochr.vcf.gz \
+    gt=$WORKING_DIR'/'$MY_VCF_NAME'.nochr.vcf.gz \
     chrom=$SHORT_CHR ref=/opt/tools/beagle/bref/$SHORT_CHR.38.bref3 \
     map=/opt/tools/beagle/map/plink.$CHR.GRCh38.map \
     out=$WORKING_DIR'/'$CHR.$MY_VCF_NAME'.nochr.phased'; 

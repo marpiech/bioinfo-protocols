@@ -21,6 +21,9 @@ for CHR in $(ls /opt/tools/beagle/map/plink* | cut -d. -f2 | grep chr); do
     out=$WORKING_DIR'/'$CHR.$MY_VCF_NAME'.nochr.phased'; 
 done;
 
+#alternatywa
+for RANGE in $(cat /opt/tools/beagle/phasing.bed); do export SHORT_CHR=$(echo $RANGE | cut -d: -f1); beagle gt=$WORKING_DIR'/'$MY_VCF_NAME'.nochr.vcf.gz' chrom=$RANGE ref='/opt/tools/beagle/bref/'$SHORT_CHR'.38.bref3' map='/opt/tools/beagle/map/plink.chr'$SHORT_CHR'.GRCh38.map' window=13 out=$WORKING_DIR'/'chr$RANGE.$MY_VCF_NAME'.nochr.phased';  done;
+
 ls -tr chr*vcf.gz | xargs -i bash -c 'tabix -p vcf {}'
 ls chr*vcf.gz.tbi | sed 's/:/\t/' |sed 's/-/\t/' | sed 's/\./\t/' | sort -k1,1V -k2,2n | sed 's/\t/:/' | sed 's/\t/-/' | sed 's/\t/\./'  | sed 's/\.tbi//' > vcf.list
 bcftools concat -f vcf.list | grep -v 'IMP' | bgzip -c > bgi.nochr.phased.vcf.gz

@@ -22,6 +22,8 @@ for CHR in $(ls /opt/tools/beagle/map/plink* | cut -d. -f2 | grep chr); do
 done;
 
 #alternatywa
+cat wgs_calling_regions.hg38.interval_list | grep -v @ | sed 's/chr//g' | awk '{print $1":"$2"-"$3}' | grep -v Y > phasing.bed
+
 for RANGE in $(cat /opt/tools/beagle/phasing.bed); do export SHORT_CHR=$(echo $RANGE | cut -d: -f1); beagle gt=$WORKING_DIR'/'$MY_VCF_NAME'.nochr.vcf.gz' chrom=$RANGE ref='/opt/tools/beagle/bref/'$SHORT_CHR'.38.bref3' map='/opt/tools/beagle/map/plink.chr'$SHORT_CHR'.GRCh38.map' window=13 out=$WORKING_DIR'/'chr$RANGE.$MY_VCF_NAME'.nochr.phased';  done;
 
 ls -tr chr*vcf.gz | xargs -i bash -c 'tabix -p vcf {}'
